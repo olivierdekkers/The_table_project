@@ -20,6 +20,9 @@ Using multiple threads for managing seperate part of the complete program
 Using a circular buffer to store list of the positions. Switch on next loop
 cycle of top program.
 
+The training_wheels program
+
+
 ##Gigles
 
 In dead spots of the laser place whireless chargegers.
