@@ -1,4 +1,4 @@
-# The touch screen game board table project
+# The table project
 
 The meaning of the project is to build a cool Family Board game table where the
 games are played on a tv screen. The touch screen is enabled through distance
