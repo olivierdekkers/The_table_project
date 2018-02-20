@@ -9,6 +9,7 @@ the above.
 
 Use lasers for the tracking of touch ( lasers for accurate positioning in the
 4 corners accurate sketches need to be made)
+Use plexiglass for cover
 
 ##Software
 
