@@ -28,14 +28,22 @@ SOURCES += \
     playingfield.cpp \
     docks.cpp \
     resource_tyle.cpp \
-    field_number.cpp
+    field_number.cpp \
+    key_press.cpp \
+    gamestate.cpp \
+    player.cpp \
+    gamewindow.cpp
 
 HEADERS += \
     zes_hoek.h \
     playingfield.h \
     docks.h \
     resource_tyle.h \
-    field_number.h
+    field_number.h \
+    key_press.h \
+    gamestate.h \
+    player.h \
+    gamewindow.h
 
 FORMS += \
         main.ui

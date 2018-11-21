@@ -1,24 +1,29 @@
 #ifndef PLAYINGFIELD_H
 #define PLAYINGFIELD_H
 
+#include <QFrame>
 #include <QGraphicsItem>
 #include "zes_hoek.h"
 #include "docks.h"
+#include "player.h"
 
-class PlayingField : public QGraphicsItem
+class PlayingField : public QFrame
 {
+    Q_OBJECT
+
 public:
-    PlayingField();
+    PlayingField(QWidget *parent =0);
+
     PlayingField(const PlayingField &p2);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget) override;
-    QRectF boundingRect() const override
-    {
-        qreal adjust = 1;
-        return QRectF(-18-adjust, -18-adjust,18-adjust,18-adjust);
-    }
+
+    void add_players(Player *new_player);
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void keyPressEvent(QPaintEvent *event);
+    void next(void);
 
 private:
+    Player *players;
     ZesHoek Fields[19];
     Docks docks[54];
 };

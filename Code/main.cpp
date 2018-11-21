@@ -3,7 +3,12 @@
 #include <math.h>
 
 #include <playingfield.h>
-
+#include "player.h"
+#include <QApplication>
+QT_BEGIN_NAMESPACE
+class QPushButton;
+class QLabel;
+QT_END_NAMESPACE
 
 //! [0]
 int main(int argc, char **argv)
@@ -20,9 +25,20 @@ int main(int argc, char **argv)
 //! [2]
 
 //! [3]
+//!
+
+    QRect rec = QApplication::desktop()->screenGeometry();
+    int width = rec.height();
+    int height = rec.height();
     PlayingField *field = new PlayingField();
+    Player *player = new Player(QColor(0,255,0),width*2,height);
+    player->add_player(new Player(QColor(255,0,0),width*2,height,player));
+    QPushButton *startButton = new QPushButton("next");
+    startButton->setFocusPolicy(Qt::NoFocus);
+    field->add_players(player);
     scene.addItem(field);
 //! [3]
+    connect(startButton, &QPushButton::clicked, field, &PlayingField::next);
 //! [4]
     QGraphicsView view(&scene);
     view.setRenderHint(QPainter::Antialiasing);

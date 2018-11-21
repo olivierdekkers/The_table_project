@@ -72,6 +72,7 @@ PlayingField::PlayingField()
 void PlayingField::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 
+  players->paint(painter,option,widget);
   painter->setBrush(QColor(0,0,255));
 
   double angle = 0.0;
@@ -101,4 +102,12 @@ void PlayingField::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
   for(int j = 0; j < Number_of_points; ++j){
       docks[j].paint(painter,option,widget);
   }
+}
+
+void PlayingField::add_players(Player *new_player){
+    players = new_player;
+}
+
+void PlayingField::next(void){
+  players = players->getNextPlayer();
 }
