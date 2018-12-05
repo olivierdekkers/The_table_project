@@ -17,6 +17,7 @@ class GameWindow : public QWidget
 
 public:
     GameWindow();
+    //void mousePressEvent(QMouseEvent *event);
 
     PlayingField *board;
     QLabel *createLabel(const QString &text);

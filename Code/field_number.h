@@ -12,8 +12,7 @@ public:
         return value;
     }
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget, int x_coordinate,int y_coordinate, int size);
+    void paint(QPainter *painter, int x_coordinate,int y_coordinate, int size);
 private:
     int value;
 

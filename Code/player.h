@@ -20,7 +20,7 @@ public:
     QColor color;
     int width;
     int height;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    void paint(QPainter *painter);
 };
 
 #endif // PLAYER_H

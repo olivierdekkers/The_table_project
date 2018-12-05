@@ -11,6 +11,7 @@ public:
     ZesHoek();
     ZesHoek(double size);
     ZesHoek(double size, std::vector<int> &possible_fiels, int *len);
+    ZesHoek(double size, std::vector<int> &possible_fiels, int *len, int xCoord, int yCoord);
     ZesHoek(ZesHoek &p2);
     ZesHoek(QPoint p1, int corner, ZesHoek &zeshoek);
     ZesHoek(QPoint p1 , int corner, ZesHoek &p2, std::vector<int> &possible_fiels, int *len);
@@ -23,8 +24,7 @@ public:
     int calc_heigth();
     double get_size();
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget);
+    void paint(QPainter *painter);
 
     QPoint points[6];
     int field_type;
@@ -34,6 +34,7 @@ private:
     int Center_XCoord;
     int Center_YCoord;
     double size;
+    void calc_points(void);
 };
 //! [0]
 

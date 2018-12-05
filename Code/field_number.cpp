@@ -9,8 +9,7 @@ fieldNumber::fieldNumber(int set_value){
 }
 
 
-void fieldNumber::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-           QWidget *widget, int x_coordinate,int y_coordinate, int size){
+void fieldNumber::paint(QPainter *painter, int x_coordinate,int y_coordinate, int size){
 
   painter->setBrush(QColor(255,255,255));
   painter->drawEllipse(QPoint(x_coordinate,y_coordinate),size,size);

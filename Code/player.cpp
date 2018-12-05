@@ -31,10 +31,13 @@ Player* Player::getNextPlayer(void){
     return next_player;
 }
 
-
-void Player::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void Player::paint(QPainter *painter)
 {
   painter->setBrush(color);
-
-  painter->drawRect(-width/2,-height/2,width,height);
+  QRadialGradient radialGradient(QPointF(width/4,height/2),height);
+  radialGradient.setColorAt(0,Qt::white);
+  radialGradient.setColorAt(0.25,Qt::white);
+  radialGradient.setColorAt(1,color);
+  QRect rect(0,0,width,height);
+  painter->fillRect(rect,radialGradient);
 }

@@ -7,9 +7,9 @@ class Docks
 {
 public:
     Docks();
+    Docks(int size);
     Docks(Docks &p1);
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
-               QWidget *widget);
+    void paint(QPainter *painter);
     void setPos(int xcoord, int ycoord);
 private:
     int Center_XCoord;
