@@ -29,12 +29,13 @@ public:
     QPoint points[6];
     int field_type;
     fieldNumber nummer;
-private:
-    QColor color;
     int Center_XCoord;
     int Center_YCoord;
+private:
+    QColor color;
     double size;
     void calc_points(void);
+    QPixmap pixmap;
 };
 //! [0]
 

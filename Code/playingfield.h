@@ -4,7 +4,6 @@
 #include <QFrame>
 #include <QGraphicsItem>
 #include "zes_hoek.h"
-#include "docks.h"
 #include "player.h"
 #include <QDragEnterEvent>
 #include <QMimeData>
@@ -17,28 +16,32 @@ QT_END_NAMESPACE
 
 class PlayingField : public QFrame
 {
+    Q_OBJECT
 public:
-    PlayingField(int width, int height,QWidget *parent =nullptr);
+    explicit PlayingField(int width, int height,Player *_players, QWidget *parent =nullptr);
 
-    PlayingField(const PlayingField &p2);
+    explicit PlayingField(const PlayingField &p2);
 
     void add_players(Player *new_player);
     void next(void);
+    fieldNumber field[8];
+    Player *players;
 protected:
     void paintEvent(QPaintEvent *event) override;
     void dragEnterEvent(QDragEnterEvent *event) override;
     void dragMoveEvent(QDragMoveEvent *event) override;
     void dropEvent(QDropEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void mouseDoubleClickEvent(QMouseEvent *event) override;
     //void keyPressEvent(QPaintEvent *event);
 
 private:
-    Player *players;
     ZesHoek Fields[19];
-    Docks docks[54];
     int width;
     int height;
     BaseMoveableObjects *base;
+    QPixmap water;
+    int x,y;
 };
 
 #endif // PLAYINGFIELD_H

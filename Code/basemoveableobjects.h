@@ -8,20 +8,49 @@
 class BaseMoveableObjects: public QLabel
 {
 public:
-    BaseMoveableObjects(QFrame *parent, QColor col, QString url, int size):QLabel(parent), color(col), scale(size){
+    BaseMoveableObjects(QWidget *parent, QColor col, QString url, int size, int value):QLabel(parent), color(col), scale(size), value(value){
         x = 10;
         y = 10;
-        QPixmap pixmap(url);
-        pixmap = pixmap.scaled(size,size);
+        QPixmap pixmap(size, size);
+        pixmap.fill(Qt::transparent);
+        QPixmap picture(url);
+        picture = picture.scaled(size,size);
         QPainter *painter = new QPainter(&pixmap);
-        painter->setPen (color);
-        painter->drawRect(0,0,size,size);
+        QRegion r(QRect(0/2,0/2,size,size),QRegion::Ellipse);
+        painter->setClipRegion(r);
+        painter->drawPixmap(0,0,picture);
+        QBrush brush(color);
+        QPen pen(brush,10);
+        painter->setPen(pen);
+        painter->drawEllipse(0,0,size,size);
         setPixmap(pixmap);
         setScaledContents(true);
         setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        painter->setClipping(false);
+    }
+
+    BaseMoveableObjects(QColor col, QString url, int size, int value): color(col), scale(size), value(value){
+        x = 10;
+        y = 10;
+        QPixmap pixmap(size, size);
+        pixmap.fill(Qt::transparent);
+        QPixmap picture(url);
+        picture = picture.scaled(size,size);
+        QPainter *painter = new QPainter(&pixmap);
+        QRegion r(QRect(0/2,0/2,size,size),QRegion::Ellipse);
+        painter->setClipRegion(r);
+        painter->drawPixmap(0,0,picture);
+        QBrush brush(color);
+        QPen pen(brush,10);
+        painter->setPen(pen);
+        painter->drawEllipse(0,0,size,size);
+        setPixmap(pixmap);
+        setScaledContents(true);
+        setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        painter->setClipping(false);
     }
     QRectF boundingRect() const;
-    int scale, x,y;
+    int scale, x,y, value;
     QColor color;
 };
 

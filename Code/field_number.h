@@ -11,9 +11,12 @@ public:
     int get_number(){
         return value;
     }
-
+    int xxxx;
+    int yyyy;
     void paint(QPainter *painter, int x_coordinate,int y_coordinate, int size);
-private:
+    void setValue(int val){
+        value = val;
+    }
     int value;
 
 };

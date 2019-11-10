@@ -20,6 +20,7 @@ ZesHoek::ZesHoek()
       int ycoo1 = Center_YCoord+size*cos(angle);
       points[angle_count]=QPoint(xcoo1,ycoo1);
   }
+  calc_points();
 }
 
 ZesHoek::ZesHoek(double size)
@@ -32,21 +33,21 @@ ZesHoek::ZesHoek(double size, std::vector<int> &possible_fiels, int *len)
   :color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
     size(size), Center_XCoord(0),Center_YCoord(0)
 {
-    calc_points();
   int rand = QRandomGenerator::global()->bounded(*len);
   field_type = possible_fiels[rand];
   possible_fiels.erase(possible_fiels.begin()+rand);
   --*len;
+    calc_points();
 }
 ZesHoek::ZesHoek(double size, std::vector<int> &possible_fiels, int *len, int xCoord, int yCoord)
   :color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
     size(size), Center_XCoord(xCoord),Center_YCoord(yCoord)
 {
-    calc_points();
   int rand = QRandomGenerator::global()->bounded(*len);
   field_type = possible_fiels[rand];
   possible_fiels.erase(possible_fiels.begin()+rand);
   --*len;
+    calc_points();
 }
 
 ZesHoek::ZesHoek(QPoint p1, int corner, ZesHoek &p2):nummer(QRandomGenerator::global()->bounded(13)){
@@ -60,6 +61,7 @@ ZesHoek::ZesHoek(QPoint p1, int corner, ZesHoek &p2):nummer(QRandomGenerator::gl
        points[i]=QPoint(p2.points[i].x()+x_movement,p2.points[i].y()+y_movement);
 
    }
+    calc_points();
 }
 ZesHoek::ZesHoek(QPoint p1 , int corner, ZesHoek &p2, std::vector<int> &possible_fiels, int *len)
   :color(QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256), QRandomGenerator::global()->bounded(256)),
@@ -79,6 +81,7 @@ ZesHoek::ZesHoek(QPoint p1 , int corner, ZesHoek &p2, std::vector<int> &possible
   field_type = possible_fiels[rand];
   possible_fiels.erase(possible_fiels.begin()+rand);
   --*len;
+    calc_points();
 }
 ZesHoek::ZesHoek(ZesHoek &p2):nummer(QRandomGenerator::global()->bounded(13)){
    size = p2.size;
@@ -86,38 +89,35 @@ ZesHoek::ZesHoek(ZesHoek &p2):nummer(QRandomGenerator::global()->bounded(13)){
    Center_XCoord = p2.Center_XCoord;
    Center_YCoord = p2.Center_YCoord;
    std::copy(std::begin(p2.points), std::end(p2.points), std::begin(points));
+    calc_points();
 }
 
 void ZesHoek::paint(QPainter *painter)
 {
-    if(field_type == 0){
-      painter->setBrush(QColor(244,164,96));
-      painter->drawPolygon(points,6);
-    }
-    else if(field_type == 2){
-      painter->setBrush(QColor(50,255,50));
-      painter->drawPolygon(points,6);
-      nummer.paint(painter,Center_XCoord,Center_YCoord,20);
-    }
-    else if(field_type == 3){
-      painter->setBrush(QColor(0,200,0));
-      painter->drawPolygon(points,6);
-      nummer.paint(painter,Center_XCoord,Center_YCoord,20);
-    }
-    else if(field_type == 4){
-      painter->setBrush(QColor(255,255,0));
-      painter->drawPolygon(points,6);
-      nummer.paint(painter,Center_XCoord,Center_YCoord,20);
-    }
-    else if(field_type == 5){
-      painter->setBrush(QColor(100,100,100));
-      painter->drawPolygon(points,6);
-      nummer.paint(painter,Center_XCoord,Center_YCoord,20);
-    }
-    else if(field_type == 6){
-      painter->setBrush(QColor(255,100,0));
-      painter->drawPolygon(points,6);
-      nummer.paint(painter,Center_XCoord,Center_YCoord,20);
+    painter->setClipping(true);
+    QPainterPath path(points[0]);
+    path.lineTo(points[1]);
+    path.lineTo(points[2]);
+    path.lineTo(points[3]);
+    path.lineTo(points[4]);
+    path.lineTo(points[5]);
+    path.closeSubpath();
+    painter->setClipPath(path);
+    QRadialGradient radialGradient(QPointF(size,size),size*2);
+    //radialGradient.setColorAt(0,Qt::transparent);
+    radialGradient.setColorAt(1,QColor(255,0,0));
+    QRect rect(0,0,size*2,size*2);
+    //painter->fillRect(rect,radialGradient);
+    painter->drawPixmap(rect,pixmap);
+    painter->drawPixmap(points[5].x(),points[0].y(),pixmap);
+    painter->clipPath();
+
+
+    painter->setClipping(false);
+
+    //painter->drawPolygon(points,6);
+    if(nummer.get_number() != 0){
+        nummer.paint(painter,Center_XCoord,Center_YCoord,20);
     }
 }
 
@@ -181,4 +181,25 @@ void ZesHoek::calc_points(void){
     points[3] = QPoint(Center_XCoord + half_length,Center_YCoord+full_length2);
     points[4] = QPoint(Center_XCoord - half_length,Center_YCoord+full_length2);
     points[5] = QPoint(Center_XCoord - full_length,Center_YCoord);
+    if(field_type == 0){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/desert.jpg");
+    }
+    else if(field_type == 2){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/grain2.jpeg");
+    }
+    else if(field_type == 3){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/weiland.jpg");
+    }
+    else if(field_type == 4){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/forrest.jpg");
+        QRect rect(10,10,780,580);
+        pixmap = pixmap.copy(rect);
+    }
+    else if(field_type == 5){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/mountain.jpeg");
+    }
+    else if(field_type == 6){
+        pixmap = QPixmap("/home/olivier/Pictures/socPictures/socGame/mine.jpg");
+    }
+    pixmap = pixmap.scaled(size*2, size*2);
 }

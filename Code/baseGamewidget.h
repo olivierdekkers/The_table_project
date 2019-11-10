@@ -1,5 +1,5 @@
-#ifndef DRAGWIDGET_H
-#define DRAGWIDGET_H
+#ifndef BASEGAMEWIDGET_H
+#define BASEGAMEWIDGET_H
 
 #include <QFrame>
 
@@ -9,10 +9,10 @@ class QDropEvent;
 QT_END_NAMESPACE
 
 //! [0]
-class DragWidget : public QFrame
+class BaseGameWidget : public QFrame
 {
 public:
-    explicit DragWidget(QColor colorQWidget,QString map, QWidget *parent = nullptr);
+    explicit BaseGameWidget(QColor colorQWidget,QString map, QWidget *parent = nullptr);
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -22,4 +22,4 @@ protected:
 };
 //! [0]
 
-#endif // DRAGWIDGET_H
+#endif // BASEGAMEWIDGET_H
